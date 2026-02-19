@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎰 MINI CASINO • Gry losowe</title>
+    <title>🎰 MINI CASINO • 7 GIER</title>
     <style>
         * {
             margin: 0;
@@ -16,17 +16,14 @@
             background: linear-gradient(135deg, #0a0c0f 0%, #1a1e24 100%);
             min-height: 100vh;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             width: 100%;
+            margin: 0 auto;
         }
 
-        /* Nagłówek */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -44,25 +41,16 @@
             50% { text-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
         }
 
-        .header p {
-            color: #a0a8b4;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-
-        /* Grid gier */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
-            margin-top: 30px;
         }
 
-        /* Karta gry */
         .game-card {
-            background: rgba(20, 24, 30, 0.8);
+            background: rgba(20, 24, 30, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
             border-radius: 20px;
             padding: 25px;
             transition: all 0.3s ease;
@@ -84,11 +72,6 @@
             font-size: 1.5rem;
         }
 
-        .game-title span {
-            font-size: 2rem;
-        }
-
-        /* Przyciski */
         .btn {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             border: none;
@@ -100,72 +83,185 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            margin: 15px 0;
+            margin: 10px 0;
             position: relative;
             overflow: hidden;
         }
 
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             transform: scale(1.02);
             box-shadow: 0 0 20px #ffd700;
         }
 
-        .btn:active {
-            transform: scale(0.98);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(30deg);
-            transition: left 0.5s ease;
+        .btn.small {
+            width: auto;
+            padding: 8px 20px;
+            margin: 5px;
         }
 
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        /* Wynik */
-        .result {
-            text-align: center;
-            font-size: 2rem;
-            margin: 15px 0;
-            min-height: 60px;
-            color: #ffd700;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Inputy */
-        .input-group {
+        .button-group {
             display: flex;
             gap: 10px;
+            margin: 10px 0;
+        }
+
+        /* Historia */
+        .history-container {
+            background: #1e242c;
+            border-radius: 10px;
+            padding: 15px;
             margin: 15px 0;
         }
 
-        .input-field {
-            background: #1e242c;
-            border: 1px solid #2a313c;
-            border-radius: 10px;
-            padding: 10px;
-            color: white;
-            width: 100%;
-            transition: all 0.3s ease;
+        .history-items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .input-field:focus {
+        .history-item {
+            background: #2a313c;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 1.1rem;
+            border: 1px solid #ffd70033;
+        }
+
+        /* Suwak */
+        .range-container {
+            margin: 20px 0;
+            color: white;
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 5px;
+            background: #2a313c;
+            border-radius: 5px;
             outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            -webkit-appearance: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            margin-top: 10px;
+        }
+
+        /* Kostki */
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+
+        .dice {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border: 3px solid white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0a0c0f;
+            backface-visibility: visible;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .dice-face.front { transform: translateZ(40px); }
+        .dice-face.back { transform: rotateY(180deg) translateZ(40px); }
+        .dice-face.right { transform: rotateY(90deg) translateZ(40px); }
+        .dice-face.left { transform: rotateY(-90deg) translateZ(40px); }
+        .dice-face.top { transform: rotateX(90deg) translateZ(40px); }
+        .dice-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
+
+        /* Statystyki */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 15px;
+            background: #1e242c;
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #a0a8b4;
+            font-size: 0.8rem;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* Histogram */
+        .histogram {
+            display: flex;
+            gap: 8px;
+            height: 80px;
+            align-items: flex-end;
+            margin: 15px 0;
+            padding: 10px;
+            background: #1e242c;
+            border-radius: 10px;
+        }
+
+        .histogram-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #ffd700, #ff8c00);
+            border-radius: 8px 8px 0 0;
+            transition: height 0.3s ease;
+            position: relative;
+            min-height: 5px;
+        }
+
+        .histogram-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffd700;
+            font-size: 0.9rem;
+            font-weight: bold;
         }
 
         /* Automat */
@@ -174,130 +270,50 @@
             justify-content: center;
             gap: 15px;
             margin: 25px 0;
+            overflow: hidden;
+            position: relative;
         }
 
         .reel {
-            width: 80px;
-            height: 100px;
+            width: 90px;
+            height: 120px;
             background: #1e242c;
-            border: 2px solid #ffd700;
+            border: 3px solid #ffd700;
             border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .reel-content {
+            position: absolute;
+            width: 100%;
+            transition: top 0.1s linear;
+        }
+
+        .reel-content div {
+            width: 100%;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            transition: all 0.1s ease;
+            font-size: 2rem;
         }
 
-        .reel.spinning {
+        .reel.spinning .reel-content {
             animation: spinReel 0.1s linear infinite;
         }
 
         @keyframes spinReel {
-            0% { transform: scale(1); content: "🍒"; }
-            20% { content: "🍋"; }
-            40% { content: "🍊"; }
-            60% { content: "🍇"; }
-            80% { content: "💎"; }
-            100% { transform: scale(1); content: "7️⃣"; }
-        }
-
-        /* Kostka */
-        .dice-container {
-            perspective: 600px;
-            width: 100px;
-            height: 100px;
-            margin: 20px auto;
-        }
-
-        .dice {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-        }
-
-        .dice-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            border: 2px solid white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #0a0c0f;
-            backface-visibility: visible;
-        }
-
-        .front { transform: translateZ(50px); }
-        .back { transform: rotateY(180deg) translateZ(50px); }
-        .right { transform: rotateY(90deg) translateZ(50px); }
-        .left { transform: rotateY(-90deg) translateZ(50px); }
-        .top { transform: rotateX(90deg) translateZ(50px); }
-        .bottom { transform: rotateX(-90deg) translateZ(50px); }
-
-        .dice.rolling {
-            animation: rollDice 1s ease-out;
-        }
-
-        @keyframes rollDice {
-            0% { transform: rotateX(0deg) rotateY(0deg); }
-            100% { transform: rotateX(720deg) rotateY(720deg); }
-        }
-
-        /* Moneta */
-        .coin-container {
-            perspective: 600px;
-            width: 100px;
-            height: 100px;
-            margin: 20px auto;
-        }
-
-        .coin {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-        }
-
-        .coin-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            border: 3px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            backface-visibility: hidden;
-        }
-
-        .coin-face.back {
-            transform: rotateY(180deg);
-        }
-
-        .coin.flipping {
-            animation: flipCoin 1s ease-out;
-        }
-
-        @keyframes flipCoin {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(720deg); }
+            0% { top: 0; }
+            100% { top: -120px; }
         }
 
         /* Ruletka */
-        .roulette-container {
+        .roulette-wheel-container {
             position: relative;
-            width: 250px;
-            height: 250px;
+            width: 300px;
+            height: 300px;
             margin: 20px auto;
         }
 
@@ -308,232 +324,492 @@
             position: relative;
             overflow: hidden;
             border: 5px solid #ffd700;
-            transition: transform 3s cubic-bezier(0.1, 0.7, 0.3, 1);
+            transition: transform 3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
             background: #1e242c;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .roulette-numbers {
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         .roulette-number {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             left: 50%;
             top: 50%;
-            margin-left: -15px;
-            margin-top: -15px;
+            margin-left: -20px;
+            margin-top: -20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             color: white;
             transform-origin: center;
             border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .roulette-pointer {
             position: absolute;
-            top: -20px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #ffd700;
             filter: drop-shadow(0 0 10px #ffd700);
-            animation: bounce 1s infinite;
             z-index: 10;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
+        /* Stół ruletki */
+        .roulette-table {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2px;
+            background: #0a5c36;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 15px 0;
         }
 
-        .color-info {
+        .table-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e242c;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .table-cell.red { background: #ff4444; }
+        .table-cell.black { background: #333; }
+        .table-cell.green { background: #44ff44; color: black; }
+        .table-cell.selected { border: 3px solid #ffd700; }
+
+        /* Blackjack */
+        .cards-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 10px 0;
-            font-size: 0.9rem;
+            gap: 15px;
+            margin: 20px 0;
+            min-height: 120px;
             flex-wrap: wrap;
         }
 
-        .color-dot {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 5px;
+        .card {
+            width: 80px;
+            height: 120px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease;
         }
 
-        .red-dot { background: #ff4444; box-shadow: 0 0 10px #ff4444; }
-        .black-dot { background: #333; box-shadow: 0 0 10px #333; }
-        .green-dot { background: #44ff44; box-shadow: 0 0 10px #44ff44; }
+        .card.red { color: #ff4444; }
+        .card.black { color: #333; }
+        .card.back {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: transparent;
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 10px, transparent 10px, transparent 20px);
+        }
+        .card.back::after {
+            content: "🎰";
+            color: #0a0c0f;
+            font-size: 2rem;
+        }
 
-        /* Komunikaty */
+        .scores {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .score {
+            background: #1e242c;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .score span {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        /* Generator słów */
+        .word-container {
+            background: #1e242c;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #ffd70033;
+        }
+
+        .generated-word {
+            font-size: 3rem;
+            color: #ffd700;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: glow 2s ease-in-out infinite;
+            word-break: break-word;
+        }
+
+        .word-info {
+            color: #a0a8b4;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .length-slider {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 15px 0;
+            min-height: 70px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
         .message {
             text-align: center;
             margin-top: 10px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
-            animation: slideUp 0.3s ease;
+            font-size: 1.1rem;
         }
 
-        .win {
-            background: rgba(46, 204, 113, 0.2);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
-        }
-
-        .lose {
-            background: rgba(255, 71, 87, 0.2);
-            border: 1px solid #ff4757;
-            color: #ff4757;
-        }
-
-        .special {
-            background: rgba(255, 215, 0, 0.2);
-            border: 1px solid #ffd700;
-            color: #ffd700;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsywność */
-        @media (max-width: 768px) {
-            .games-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .slot-machine {
-                gap: 10px;
-            }
-            
-            .reel {
-                width: 60px;
-                height: 80px;
-                font-size: 2rem;
-            }
-            
-            .color-info {
-                gap: 10px;
-                font-size: 0.8rem;
-            }
-        }
+        .win { background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; color: #2ecc71; }
+        .lose { background: rgba(255, 71, 87, 0.2); border: 1px solid #ff4757; color: #ff4757; }
+        .special { background: rgba(255, 215, 0, 0.2); border: 1px solid #ffd700; color: #ffd700; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎰 MINI CASINO</h1>
-            <p>Wszystkie gry za darmo • Tylko zabawa!</p>
+            <h1>🎰 MINI CASINO • 7 GIER</h1>
         </div>
 
         <div class="games-grid">
-            <!-- 1️⃣ Losuj liczbę -->
+            <!-- 1️⃣ LOSUJ LICZBĘ -->
             <div class="game-card">
                 <div class="game-title">
                     <span>🔢</span>
                     <h3>Losuj liczbę</h3>
                 </div>
-                <div class="input-group">
-                    <input type="number" id="minRange" class="input-field" placeholder="Min" value="1">
-                    <input type="number" id="maxRange" class="input-field" placeholder="Max" value="100">
+                
+                <div class="range-container">
+                    <input type="range" id="rangeMin" class="range-slider" min="1" max="100" value="1">
+                    <input type="range" id="rangeMax" class="range-slider" min="1" max="100" value="100">
+                    <div class="range-values">
+                        <span>Min: <span id="minVal">1</span></span>
+                        <span>Max: <span id="maxVal">100</span></span>
+                    </div>
                 </div>
+
                 <div class="result" id="numberResult">0</div>
                 <button class="btn" onclick="drawNumber()">LOSUJ</button>
+                
+                <div class="history-container">
+                    <div class="history-items" id="numberHistory"></div>
+                </div>
                 <div id="numberMessage" class="message"></div>
             </div>
 
-            <!-- 2️⃣ Rzut kostką -->
+            <!-- 2️⃣ RZUT KOŚCIĄ -->
             <div class="game-card">
                 <div class="game-title">
                     <span>🎲</span>
-                    <h3>Rzut kostką</h3>
+                    <h3>Kości</h3>
                 </div>
-                <div class="dice-container">
-                    <div class="dice" id="dice">
-                        <div class="dice-face front">1</div>
-                        <div class="dice-face back">6</div>
-                        <div class="dice-face right">3</div>
-                        <div class="dice-face left">4</div>
-                        <div class="dice-face top">2</div>
-                        <div class="dice-face bottom">5</div>
+
+                <div class="range-container">
+                    <span style="color: white;">Liczba kości: <span id="diceCount">1</span></span>
+                    <input type="range" id="diceCountRange" class="range-slider" min="1" max="5" value="1">
+                </div>
+
+                <div class="dice-container" id="diceContainer"></div>
+
+                <div class="result" id="diceResult">0</div>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-label">1</div>
+                        <div class="stat-value" id="stat1">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">2</div>
+                        <div class="stat-value" id="stat2">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">3</div>
+                        <div class="stat-value" id="stat3">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">4</div>
+                        <div class="stat-value" id="stat4">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">5</div>
+                        <div class="stat-value" id="stat5">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">6</div>
+                        <div class="stat-value" id="stat6">0%</div>
                     </div>
                 </div>
-                <div class="result" id="diceResult">0</div>
-                <button class="btn" onclick="rollDice()">RZUĆ</button>
+
+                <div class="histogram" id="diceHistogram"></div>
+
+                <button class="btn" onclick="rollDice()">RZUĆ KOŚĆMI</button>
+                
+                <div class="history-container">
+                    <div class="history-items" id="diceHistory"></div>
+                </div>
                 <div id="diceMessage" class="message"></div>
             </div>
 
-            <!-- 3️⃣ Orzeł czy reszka -->
+            <!-- 3️⃣ ORZEŁ CZY RESZKA -->
             <div class="game-card">
                 <div class="game-title">
                     <span>🪙</span>
                     <h3>Orzeł czy reszka</h3>
                 </div>
-                <div class="coin-container">
-                    <div class="coin" id="coin">
-                        <div class="coin-face front">🦅</div>
-                        <div class="coin-face back">💀</div>
+                
+                <div style="perspective: 600px; width: 120px; height: 120px; margin: 20px auto;">
+                    <div class="coin" id="coin" style="width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s;">
+                        <div class="coin-face front" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #ffd700, #ff8c00); border: 3px solid white; display: flex; align-items: center; justify-content: center; font-size: 3rem; backface-visibility: hidden;">🦅</div>
+                        <div class="coin-face back" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #ffd700, #ff8c00); border: 3px solid white; display: flex; align-items: center; justify-content: center; font-size: 3rem; backface-visibility: hidden; transform: rotateY(180deg);">💀</div>
                     </div>
                 </div>
+
                 <div class="result" id="coinResult">?</div>
-                <button class="btn" onclick="flipCoin()">RZUĆ</button>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-label">Orzeł</div>
+                        <div class="stat-value" id="coinHeadsStat">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Reszka</div>
+                        <div class="stat-value" id="coinTailsStat">0%</div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="flipCoin()">RZUĆ MONETĄ</button>
+                
+                <div class="history-container">
+                    <div class="history-items" id="coinHistory"></div>
+                </div>
                 <div id="coinMessage" class="message"></div>
             </div>
 
-            <!-- 4️⃣ Automat -->
+            <!-- 4️⃣ AUTOMAT - SZYBKA GRA -->
             <div class="game-card">
                 <div class="game-title">
                     <span>🎰</span>
                     <h3>Automat</h3>
                 </div>
+
                 <div class="slot-machine">
-                    <div class="reel" id="reel1">🍒</div>
-                    <div class="reel" id="reel2">🍒</div>
-                    <div class="reel" id="reel3">🍒</div>
+                    <div class="reel" id="reel1">
+                        <div class="reel-content" id="reel1Content">
+                            <div>🍒</div>
+                            <div>🍒</div>
+                            <div>🍒</div>
+                        </div>
+                    </div>
+                    <div class="reel" id="reel2">
+                        <div class="reel-content" id="reel2Content">
+                            <div>🍒</div>
+                            <div>🍒</div>
+                            <div>🍒</div>
+                        </div>
+                    </div>
+                    <div class="reel" id="reel3">
+                        <div class="reel-content" id="reel3Content">
+                            <div>🍒</div>
+                            <div>🍒</div>
+                            <div>🍒</div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="result" id="slotResult"></div>
-                <button class="btn" onclick="spinSlots()">ZAKRĘĆ</button>
+                
+                <div class="button-group">
+                    <button class="btn" onclick="spinSlots()" id="spinSlotBtn" style="flex: 2;">ZAKRĘĆ</button>
+                    <button class="btn small" onclick="quickSpin()" id="quickSpinBtn" style="flex: 1;">⚡ SZYBKA</button>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-label">Jackpot</div>
+                        <div class="stat-value" id="slotJackpot">1000</div>
+                    </div>
+                </div>
+
+                <div class="history-container">
+                    <div class="history-items" id="slotHistory"></div>
+                </div>
                 <div id="slotMessage" class="message"></div>
             </div>
 
-            <!-- 5️⃣ Ruletka -->
+            <!-- 5️⃣ RULETKA - WIELE ZAKŁADÓW + RESET -->
             <div class="game-card">
                 <div class="game-title">
                     <span>🎡</span>
                     <h3>Ruletka</h3>
                 </div>
-                <div class="color-info">
-                    <span><span class="color-dot red-dot"></span> Czerwone: 18</span>
-                    <span><span class="color-dot black-dot"></span> Czarne: 18</span>
-                    <span><span class="color-dot green-dot"></span> Zielone: 1 (0)</span>
+
+                <div class="roulette-table" id="rouletteTable"></div>
+
+                <div class="button-group">
+                    <button class="btn small" onclick="resetBets()" style="background: #ff4444;">🗑️ RESET</button>
                 </div>
-                <input type="number" id="rouletteNumber" class="input-field" placeholder="Wybierz numer 0-36" min="0" max="36" value="0">
-                <div class="roulette-container">
+
+                <div class="history-container">
+                    <div class="history-items" id="rouletteHistory"></div>
+                </div>
+
+                <div class="roulette-wheel-container">
                     <div class="roulette-wheel" id="rouletteWheel">
                         <div class="roulette-numbers" id="rouletteNumbers"></div>
                     </div>
                     <div class="roulette-pointer">▼</div>
                 </div>
+
                 <div class="result" id="rouletteResult">0</div>
-                <button class="btn" onclick="spinRoulette()">KRĘĆ</button>
+                <button class="btn" onclick="spinRoulette()" id="rouletteSpinBtn">KRĘĆ RULETKĄ</button>
                 <div id="rouletteMessage" class="message"></div>
+            </div>
+
+            <!-- 6️⃣ BLACKJACK (OCZKO) -->
+            <div class="game-card">
+                <div class="game-title">
+                    <span>🃏</span>
+                    <h3>Blackjack</h3>
+                </div>
+
+                <div class="scores">
+                    <div class="score">Ty: <span id="playerScore">0</span></div>
+                    <div class="score">Krupier: <span id="dealerScore">0</span></div>
+                </div>
+
+                <div class="cards-container" id="playerCards"></div>
+                <div class="cards-container" id="dealerCards"></div>
+
+                <div class="result" id="bjResult">?</div>
+                
+                <div class="button-group">
+                    <button class="btn" onclick="hit()" id="hitBtn">DOBIERZ</button>
+                    <button class="btn" onclick="stand()" id="standBtn">PAS</button>
+                </div>
+                
+                <button class="btn" onclick="newGame()" id="newGameBtn">🔄 NOWA GRA</button>
+
+                <div class="history-container">
+                    <div class="history-items" id="bjHistory"></div>
+                </div>
+                <div id="bjMessage" class="message"></div>
+            </div>
+
+            <!-- 7️⃣ GENERATOR LOSOWYCH SŁÓW - NOWA GRA -->
+            <div class="game-card">
+                <div class="game-title">
+                    <span>📝</span>
+                    <h3>Generator słów</h3>
+                </div>
+
+                <div class="word-container">
+                    <div class="generated-word" id="generatedWord">KASynO</div>
+                    <div class="word-info" id="wordInfo">7 liter • 3 samogłoski</div>
+                </div>
+
+                <div class="range-container">
+                    <span style="color: white;">Długość słowa: <span id="wordLength">7</span></span>
+                    <input type="range" id="wordLengthRange" class="range-slider length-slider" min="3" max="12" value="7">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn" onclick="generateWord()" id="generateWordBtn">LOSUJ SŁOWO</button>
+                    <button class="btn small" onclick="copyWord()" id="copyWordBtn">📋 KOPIUJ</button>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-label">Samogłoski</div>
+                        <div class="stat-value" id="vowelCount">3</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Spółgłoski</div>
+                        <div class="stat-value" id="consonantCount">4</div>
+                    </div>
+                </div>
+
+                <div class="history-container">
+                    <div class="history-items" id="wordHistory"></div>
+                </div>
+                <div id="wordMessage" class="message"></div>
             </div>
         </div>
     </div>
 
     <script>
         // ==================== LOSUJ LICZBĘ ====================
+        let numberHistory = [];
+        
+        const rangeMin = document.getElementById('rangeMin');
+        const rangeMax = document.getElementById('rangeMax');
+        const minVal = document.getElementById('minVal');
+        const maxVal = document.getElementById('maxVal');
+
+        rangeMin.addEventListener('input', function() {
+            minVal.textContent = this.value;
+            if (parseInt(this.value) >= parseInt(rangeMax.value)) {
+                rangeMax.value = parseInt(this.value) + 1;
+                maxVal.textContent = rangeMax.value;
+            }
+        });
+
+        rangeMax.addEventListener('input', function() {
+            maxVal.textContent = this.value;
+            if (parseInt(this.value) <= parseInt(rangeMin.value)) {
+                rangeMin.value = parseInt(this.value) - 1;
+                minVal.textContent = rangeMin.value;
+            }
+        });
+
         function drawNumber() {
-            const min = parseInt(document.getElementById('minRange').value) || 1;
-            const max = parseInt(document.getElementById('maxRange').value) || 100;
+            const min = parseInt(rangeMin.value);
+            const max = parseInt(rangeMax.value);
             const resultDiv = document.getElementById('numberResult');
             const messageDiv = document.getElementById('numberMessage');
             
@@ -543,7 +819,6 @@
                 return;
             }
             
-            // Animacja
             const interval = setInterval(() => {
                 resultDiv.textContent = Math.floor(Math.random() * (max - min + 1)) + min;
             }, 50);
@@ -552,216 +827,692 @@
                 clearInterval(interval);
                 const result = Math.floor(Math.random() * (max - min + 1)) + min;
                 resultDiv.textContent = result;
+                
+                numberHistory.unshift(result);
+                if (numberHistory.length > 5) numberHistory.pop();
+                document.getElementById('numberHistory').innerHTML = numberHistory.map(n => 
+                    `<span class="history-item">${n}</span>`
+                ).join('');
+                
                 messageDiv.textContent = `✅ Wylosowano: ${result}`;
                 messageDiv.className = 'message win';
             }, 500);
         }
 
-        // ==================== RZUT KOSTKĄ ====================
+        // ==================== KOŚCI ====================
+        let diceStats = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
+        let diceHistory = [];
+        let isRolling = false;
+
+        document.getElementById('diceCountRange').addEventListener('input', function() {
+            document.getElementById('diceCount').textContent = this.value;
+            updateDiceDisplay(parseInt(this.value));
+        });
+
+        function updateDiceDisplay(count) {
+            const container = document.getElementById('diceContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const dice = document.createElement('div');
+                dice.className = 'dice';
+                dice.id = `dice${i+1}`;
+                dice.innerHTML = `
+                    <div class="dice-face front">1</div>
+                    <div class="dice-face back">6</div>
+                    <div class="dice-face right">3</div>
+                    <div class="dice-face left">4</div>
+                    <div class="dice-face top">2</div>
+                    <div class="dice-face bottom">5</div>
+                `;
+                container.appendChild(dice);
+            }
+        }
+
         function rollDice() {
-            const dice = document.getElementById('dice');
+            if (isRolling) return;
+            
+            const count = parseInt(document.getElementById('diceCountRange').value);
             const resultDiv = document.getElementById('diceResult');
             const messageDiv = document.getElementById('diceMessage');
+            const btn = document.querySelector('#diceMessage').parentNode.querySelector('.btn');
             
-            dice.classList.add('rolling');
+            isRolling = true;
+            btn.disabled = true;
+            
+            // Losowe rotacje
+            for (let i = 1; i <= count; i++) {
+                const dice = document.getElementById(`dice${i}`);
+                if (dice) {
+                    const rotX = Math.random() * 1080;
+                    const rotY = Math.random() * 1080;
+                    const rotZ = Math.random() * 1080;
+                    dice.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+                }
+            }
             
             setTimeout(() => {
-                dice.classList.remove('rolling');
-                const result = Math.floor(Math.random() * 6) + 1;
+                const results = [];
+                for (let i = 1; i <= count; i++) {
+                    const dice = document.getElementById(`dice${i}`);
+                    if (dice) {
+                        const result = Math.floor(Math.random() * 6) + 1;
+                        results.push(result);
+                        
+                        const rotations = {
+                            1: 'rotateX(0deg) rotateY(0deg)',
+                            2: 'rotateX(-90deg) rotateY(0deg)',
+                            3: 'rotateY(-90deg) rotateX(0deg)',
+                            4: 'rotateY(90deg) rotateX(0deg)',
+                            5: 'rotateX(90deg) rotateY(0deg)',
+                            6: 'rotateY(180deg) rotateX(0deg)'
+                        };
+                        
+                        dice.style.transform = rotations[result];
+                        
+                        // Aktualizuj statystyki
+                        diceStats[result] = (diceStats[result] || 0) + 1;
+                    }
+                }
                 
-                // Ustaw odpowiednią ściankę
-                const rotations = {
-                    1: 'rotateX(0deg) rotateY(0deg)',
-                    2: 'rotateX(-90deg) rotateY(0deg)',
-                    3: 'rotateY(-90deg) rotateX(0deg)',
-                    4: 'rotateY(90deg) rotateX(0deg)',
-                    5: 'rotateX(90deg) rotateY(0deg)',
-                    6: 'rotateY(180deg) rotateX(0deg)'
-                };
+                // Wyświetl sumę
+                const sum = results.reduce((a,b) => a + b, 0);
+                if (count > 1) {
+                    resultDiv.textContent = sum + ' (' + results.join('+') + ')';
+                } else {
+                    resultDiv.textContent = sum;
+                }
                 
-                dice.style.transform = rotations[result];
-                resultDiv.textContent = result;
-                messageDiv.textContent = `✅ Wylosowano: ${result}`;
+                // Aktualizuj statystyki i histogram
+                updateDiceStats();
+                updateDiceHistogram();
+                
+                // Historia wyświetla sumę
+                const historyEntry = count > 1 ? sum + ' (' + results.join('+') + ')' : sum;
+                diceHistory.unshift(historyEntry);
+                if (diceHistory.length > 5) diceHistory.pop();
+                document.getElementById('diceHistory').innerHTML = diceHistory.map(r => 
+                    `<span class="history-item">${r}</span>`
+                ).join('');
+                
+                messageDiv.textContent = `✅ Wylosowano: ${results.join(', ')}`;
                 messageDiv.className = 'message win';
+                
+                isRolling = false;
+                btn.disabled = false;
             }, 1000);
         }
 
+        function updateDiceStats() {
+            const total = Object.values(diceStats).reduce((a,b) => a + b, 0) || 1;
+            for (let i = 1; i <= 6; i++) {
+                const procent = Math.round((diceStats[i] / total) * 100) || 0;
+                document.getElementById(`stat${i}`).textContent = procent + '%';
+            }
+        }
+
+        function updateDiceHistogram() {
+            const histogram = document.getElementById('diceHistogram');
+            const total = Object.values(diceStats).reduce((a,b) => a + b, 0) || 1;
+            
+            let html = '';
+            for (let i = 1; i <= 6; i++) {
+                const count = diceStats[i] || 0;
+                const height = (count / total) * 100;
+                html += `<div class="histogram-bar" style="height: ${height}px;" data-value="${count}"></div>`;
+            }
+            histogram.innerHTML = html;
+        }
+
         // ==================== ORZEŁ CZY RESZKA ====================
+        let coinStats = {heads: 0, tails: 0};
+        let coinHistory = [];
+
         function flipCoin() {
             const coin = document.getElementById('coin');
             const resultDiv = document.getElementById('coinResult');
             const messageDiv = document.getElementById('coinMessage');
             
-            coin.classList.add('flipping');
+            const rotX = Math.random() * 720;
+            const rotY = Math.random() * 720;
+            coin.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
             
             setTimeout(() => {
-                coin.classList.remove('flipping');
                 const result = Math.random() < 0.5 ? 'heads' : 'tails';
                 
                 coin.style.transform = result === 'heads' ? 'rotateY(0deg)' : 'rotateY(180deg)';
-                resultDiv.textContent = result === 'heads' ? '🦅 ORZEŁ' : '💀 RESZKA';
+                resultDiv.textContent = result === 'heads' ? '🦅' : '💀';
+                
+                if (result === 'heads') coinStats.heads++;
+                else coinStats.tails++;
+                
+                const total = coinStats.heads + coinStats.tails;
+                document.getElementById('coinHeadsStat').textContent = Math.round((coinStats.heads / total) * 100) + '%';
+                document.getElementById('coinTailsStat').textContent = Math.round((coinStats.tails / total) * 100) + '%';
+                
+                coinHistory.unshift(result === 'heads' ? '🦅' : '💀');
+                if (coinHistory.length > 5) coinHistory.pop();
+                document.getElementById('coinHistory').innerHTML = coinHistory.map(r => 
+                    `<span class="history-item">${r}</span>`
+                ).join('');
+                
                 messageDiv.textContent = `✅ ${result === 'heads' ? 'ORZEŁ' : 'RESZKA'}`;
                 messageDiv.className = 'message win';
             }, 1000);
         }
 
-        // ==================== AUTOMAT ====================
-        const symbols = ['🍒', '🍋', '🍊', '🍇', '💎', '7️⃣'];
-        
+        // ==================== AUTOMAT - SZYBKA GRA ====================
+        const slotSymbols = ['🍒', '🍋', '🍊', '🍇', '💎', '7️⃣'];
+        let slotHistory = [];
+        let jackpot = 1000;
+        let isSpinning = false;
+        let quickMode = false;
+
         function spinSlots() {
+            if (isSpinning) return;
+            
             const reels = [
                 document.getElementById('reel1'),
                 document.getElementById('reel2'),
                 document.getElementById('reel3')
             ];
+            const reelContents = [
+                document.getElementById('reel1Content'),
+                document.getElementById('reel2Content'),
+                document.getElementById('reel3Content')
+            ];
             const resultDiv = document.getElementById('slotResult');
             const messageDiv = document.getElementById('slotMessage');
+            const btn = document.getElementById('spinSlotBtn');
+            const quickBtn = document.getElementById('quickSpinBtn');
             
-            // Animacja
+            isSpinning = true;
+            btn.disabled = true;
+            if (quickBtn) quickBtn.disabled = true;
+            
+            // Dodaj klasę spinning do bębnów
             reels.forEach(reel => reel.classList.add('spinning'));
             
-            // Zatrzymywanie po kolei
-            const results = [];
+            let result1, result2, result3;
+            
+            const stopDelay1 = quickMode ? 150 : 500;
+            const stopDelay2 = quickMode ? 250 : 800;
+            const stopDelay3 = quickMode ? 300 : 1100;
             
             setTimeout(() => {
                 reels[0].classList.remove('spinning');
-                results[0] = symbols[Math.floor(Math.random() * symbols.length)];
-                reels[0].textContent = results[0];
-            }, 500);
+                result1 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                reelContents[0].innerHTML = `<div>${result1}</div><div>${result1}</div><div>${result1}</div>`;
+                reelContents[0].style.top = '0';
+            }, stopDelay1);
             
             setTimeout(() => {
                 reels[1].classList.remove('spinning');
-                results[1] = symbols[Math.floor(Math.random() * symbols.length)];
-                reels[1].textContent = results[1];
-            }, 800);
+                result2 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                reelContents[1].innerHTML = `<div>${result2}</div><div>${result2}</div><div>${result2}</div>`;
+                reelContents[1].style.top = '0';
+            }, stopDelay2);
             
             setTimeout(() => {
                 reels[2].classList.remove('spinning');
-                results[2] = symbols[Math.floor(Math.random() * symbols.length)];
-                reels[2].textContent = results[2];
+                result3 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                reelContents[2].innerHTML = `<div>${result3}</div><div>${result3}</div><div>${result3}</div>`;
+                reelContents[2].style.top = '0';
                 
+                const results = [result1, result2, result3];
                 resultDiv.innerHTML = results.join(' ');
                 
                 if (results[0] === results[1] && results[1] === results[2]) {
+                    jackpot += 100;
                     messageDiv.textContent = '🎉 JACKPOT! WYGRANA!';
                     messageDiv.className = 'message win';
                 } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                    jackpot += 20;
                     messageDiv.textContent = '🎯 BLISKO! Prawie wygrana';
                     messageDiv.className = 'message win';
                 } else {
                     messageDiv.textContent = '😢 SPRÓBUJ PONOWNIE';
                     messageDiv.className = 'message lose';
                 }
-            }, 1100);
+                
+                document.getElementById('slotJackpot').textContent = jackpot;
+                
+                slotHistory.unshift(results.join(''));
+                if (slotHistory.length > 5) slotHistory.pop();
+                document.getElementById('slotHistory').innerHTML = slotHistory.map(r => 
+                    `<span class="history-item">${r}</span>`
+                ).join('');
+                
+                isSpinning = false;
+                btn.disabled = false;
+                if (quickBtn) quickBtn.disabled = false;
+            }, stopDelay3);
+        }
+
+        function quickSpin() {
+            quickMode = !quickMode;
+            const btn = document.getElementById('quickSpinBtn');
+            btn.style.background = quickMode ? '#ff8c00' : '';
+            btn.textContent = quickMode ? '⚡ SZYBKA (ON)' : '⚡ SZYBKA';
+            spinSlots();
         }
 
         // ==================== RULETKA ====================
-        // Inicjalizacja ruletki - 37 pól (18 czerwonych, 18 czarnych, 1 zielone)
+        const rouletteNumbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
+        let rouletteHistory = [];
+        let isRouletteSpinning = false;
+        let selectedBets = [];
+
+        function getNumberColor(num) {
+            if (num === 0) return '#44ff44';
+            const reds = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+            return reds.includes(num) ? '#ff4444' : '#333';
+        }
+
         function initRoulette() {
             const numbersDiv = document.getElementById('rouletteNumbers');
             let html = '';
             
-            // Prawdziwy układ ruletki (na zmianę czerwone i czarne, zielone na 0)
-            const colors = ['#ff4444', '#333']; // czerwony, czarny
-            
             for (let i = 0; i < 37; i++) {
-                // 0 jest zielone, reszta na zmianę czerwone/czarne
-                const color = i === 0 ? '#44ff44' : colors[(i - 1) % 2];
-                
-                // Oblicz pozycję na kole (kąt)
+                const num = rouletteNumbers[i];
+                const color = getNumberColor(num);
                 const angle = (i / 37) * 360;
                 
-                html += `<div class="roulette-number" style="transform: rotate(${angle}deg) translate(105px) rotate(-${angle}deg); background: ${color};">${i}</div>`;
+                html += `<div class="roulette-number" style="transform: rotate(${angle}deg) translate(130px) rotate(-${angle}deg); background: ${color};">${num}</div>`;
             }
             
             numbersDiv.innerHTML = html;
         }
 
-        // Wywołaj inicjalizację po załadowaniu strony
-        window.onload = function() {
-            initRoulette();
-        };
+        function initRouletteTable() {
+            const table = document.getElementById('rouletteTable');
+            let html = '';
+            
+            html += '<div class="table-cell green" onclick="placeBet(0)">0</div>';
+            
+            for (let i = 1; i <= 36; i++) {
+                const color = getNumberColor(i) === '#ff4444' ? 'red' : 'black';
+                html += `<div class="table-cell ${color}" onclick="placeBet(${i})">${i}</div>`;
+            }
+            
+            html += '<div class="table-cell red" onclick="placeBet(\'red\')">🔴</div>';
+            html += '<div class="table-cell black" onclick="placeBet(\'black\')">⚫</div>';
+            html += '<div class="table-cell" style="background:#4169e1;" onclick="placeBet(\'even\')">PARZ</div>';
+            html += '<div class="table-cell" style="background:#4169e1;" onclick="placeBet(\'odd\')">NIE</div>';
+            html += '<div class="table-cell" style="background:#32cd32;" onclick="placeBet(\'low\')">1-18</div>';
+            html += '<div class="table-cell" style="background:#32cd32;" onclick="placeBet(\'high\')">19-36</div>';
+            
+            table.innerHTML = html;
+        }
 
-        // Flaga blokująca wielokrotne kręcenie
-        let isSpinning = false;
+        function placeBet(bet) {
+            const cells = document.querySelectorAll('.table-cell');
+            let targetCell = null;
+            
+            if (typeof bet === 'number') {
+                targetCell = Array.from(cells).find(cell => cell.textContent == bet);
+            } else {
+                const index = bet === 'red' ? 37 : bet === 'black' ? 38 : bet === 'even' ? 39 : bet === 'odd' ? 40 : bet === 'low' ? 41 : 42;
+                targetCell = cells[index];
+            }
+            
+            if (targetCell) {
+                if (targetCell.classList.contains('selected')) {
+                    targetCell.classList.remove('selected');
+                    selectedBets = selectedBets.filter(b => b !== bet);
+                } else {
+                    targetCell.classList.add('selected');
+                    selectedBets.push(bet);
+                }
+            }
+        }
+
+        function resetBets() {
+            document.querySelectorAll('.table-cell').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+            selectedBets = [];
+        }
 
         function spinRoulette() {
-            // Blokada - zapobiega wielokrotnemu kręceniu
-            if (isSpinning) return;
-            
-            const wheel = document.getElementById('rouletteWheel');
-            const number = parseInt(document.getElementById('rouletteNumber').value);
-            const resultDiv = document.getElementById('rouletteResult');
-            const messageDiv = document.getElementById('rouletteMessage');
-            const spinBtn = event.target;
-            
-            if (number < 0 || number > 36 || isNaN(number)) {
-                messageDiv.textContent = '❌ Wybierz numer 0-36!';
-                messageDiv.className = 'message lose';
+            if (isRouletteSpinning) return;
+            if (selectedBets.length === 0) {
+                alert('Postaw zakład!');
                 return;
             }
             
-            // Ustaw blokadę
-            isSpinning = true;
-            spinBtn.disabled = true;
-            spinBtn.style.opacity = '0.5';
+            const wheel = document.getElementById('rouletteWheel');
+            const resultDiv = document.getElementById('rouletteResult');
+            const messageDiv = document.getElementById('rouletteMessage');
+            const btn = document.getElementById('rouletteSpinBtn');
             
-            // Losowa liczba obrotów (5-8 pełnych obrotów + losowy kąt)
-            const spins = 5 + Math.random() * 3;
-            const degrees = 360 * spins + Math.random() * 360;
+            isRouletteSpinning = true;
+            btn.disabled = true;
+            
+            const spins = 8 + Math.random() * 5;
+            const degrees = 360 * spins;
             wheel.style.transform = `rotate(${degrees}deg)`;
             
             setTimeout(() => {
-                wheel.style.transform = 'rotate(0deg)';
+                const stopAngle = Math.random() * 360;
+                wheel.style.transform = `rotate(${degrees + stopAngle}deg)`;
                 
-                // Losuj wynik (0-36)
-                const result = Math.floor(Math.random() * 37);
-                
-                // Określ kolor wyniku
-                let resultColor = '';
-                let resultEmoji = '';
-                if (result === 0) {
-                    resultColor = 'ZIELONE';
-                    resultEmoji = '🟢';
-                } else if (result % 2 === 0) {
-                    resultColor = 'CZERWONE';
-                    resultEmoji = '🔴';
-                } else {
-                    resultColor = 'CZARNE';
-                    resultEmoji = '⚫';
-                }
+                const segmentSize = 360 / 37;
+                const segmentIndex = Math.floor(((stopAngle + segmentSize/2) % 360) / segmentSize);
+                const result = rouletteNumbers[segmentIndex];
                 
                 resultDiv.textContent = result;
                 
-                // Sprawdź czy wygrana
-                if (result === number) {
-                    if (result === 0) {
-                        messageDiv.textContent = `🎉 RZADKI TRAF! Wylosowano ${result} (${resultEmoji} ZIELONE)!`;
-                        messageDiv.className = 'message special';
-                    } else {
-                        messageDiv.textContent = `🎉 WYGRANA! Trafiłeś ${result} (${resultEmoji} ${resultColor})!`;
-                        messageDiv.className = 'message win';
+                const color = result === 0 ? '🟢' : (getNumberColor(result) === '#ff4444' ? '🔴' : '⚫');
+                rouletteHistory.unshift(`${color} ${result}`);
+                if (rouletteHistory.length > 10) rouletteHistory.pop();
+                document.getElementById('rouletteHistory').innerHTML = rouletteHistory.map(r => 
+                    `<span class="history-item">${r}</span>`
+                ).join('');
+                
+                let win = false;
+                selectedBets.forEach(bet => {
+                    if (checkWin(bet, result)) {
+                        win = true;
                     }
+                });
+                
+                if (win) {
+                    messageDiv.textContent = `🎉 WYGRANA!`;
+                    messageDiv.className = 'message win';
                 } else {
-                    messageDiv.textContent = `😢 PRZEGRANA - Wylosowano ${result} (${resultEmoji} ${resultColor})`;
+                    messageDiv.textContent = `😢 PRZEGRANA - ${result}`;
                     messageDiv.className = 'message lose';
                 }
                 
-                // Zwolnij blokadę
-                isSpinning = false;
-                spinBtn.disabled = false;
-                spinBtn.style.opacity = '1';
+                isRouletteSpinning = false;
+                btn.disabled = false;
             }, 3000);
         }
 
-        // Walidacja inputa ruletki
-        document.getElementById('rouletteNumber').addEventListener('input', function(e) {
-            let value = parseInt(e.target.value);
-            if (isNaN(value)) value = 0;
-            if (value < 0) value = 0;
-            if (value > 36) value = 36;
-            e.target.value = value;
+        function checkWin(bet, result) {
+            if (typeof bet === 'number') {
+                return bet === result;
+            }
+            
+            switch(bet) {
+                case 'red': return result !== 0 && getNumberColor(result) === '#ff4444';
+                case 'black': return result !== 0 && getNumberColor(result) === '#333';
+                case 'even': return result !== 0 && result % 2 === 0;
+                case 'odd': return result !== 0 && result % 2 === 1;
+                case 'low': return result >= 1 && result <= 18;
+                case 'high': return result >= 19 && result <= 36;
+                default: return false;
+            }
+        }
+
+        // ==================== BLACKJACK (OCZKO) ====================
+        let deck = [];
+        let playerCards = [];
+        let dealerCards = [];
+        let gameOver = false;
+        let bjHistory = [];
+
+        function createDeck() {
+            const suits = ['♥', '♦', '♣', '♠'];
+            const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            deck = [];
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({ value, suit, points: getPoints(value) });
+                }
+            }
+            shuffleDeck();
+        }
+
+        function getPoints(value) {
+            if (value === 'A') return 11;
+            if (['J', 'Q', 'K'].includes(value)) return 10;
+            return parseInt(value);
+        }
+
+        function shuffleDeck() {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
+
+        function dealCard() {
+            return deck.pop();
+        }
+
+        function getCardColor(suit) {
+            return (suit === '♥' || suit === '♦') ? 'red' : 'black';
+        }
+
+        function updateDisplay() {
+            // Karty gracza
+            const playerDiv = document.getElementById('playerCards');
+            playerDiv.innerHTML = '';
+            playerCards.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `card ${getCardColor(card.suit)}`;
+                cardDiv.innerHTML = `${card.value}${card.suit}`;
+                playerDiv.appendChild(cardDiv);
+            });
+
+            // Karty krupiera
+            const dealerDiv = document.getElementById('dealerCards');
+            dealerDiv.innerHTML = '';
+            dealerCards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                if (index === 1 && !gameOver) {
+                    cardDiv.className = 'card back';
+                } else {
+                    cardDiv.className = `card ${getCardColor(card.suit)}`;
+                    cardDiv.innerHTML = `${card.value}${card.suit}`;
+                }
+                dealerDiv.appendChild(cardDiv);
+            });
+
+            // Wyniki
+            const playerScore = calculateScore(playerCards);
+            const dealerScore = gameOver ? calculateScore(dealerCards) : calculateScore([dealerCards[0]]);
+            
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('dealerScore').textContent = dealerScore;
+        }
+
+        function calculateScore(cards) {
+            let score = 0;
+            let aces = 0;
+            
+            cards.forEach(card => {
+                if (card.value === 'A') {
+                    aces++;
+                    score += 11;
+                } else {
+                    score += getPoints(card.value);
+                }
+            });
+            
+            while (score > 21 && aces > 0) {
+                score -= 10;
+                aces--;
+            }
+            
+            return score;
+        }
+
+        function newGame() {
+            createDeck();
+            playerCards = [dealCard(), dealCard()];
+            dealerCards = [dealCard(), dealCard()];
+            gameOver = false;
+            
+            document.getElementById('hitBtn').disabled = false;
+            document.getElementById('standBtn').disabled = false;
+            document.getElementById('bjMessage').textContent = '';
+            
+            updateDisplay();
+            checkBlackjack();
+        }
+
+        function checkBlackjack() {
+            const playerScore = calculateScore(playerCards);
+            if (playerScore === 21) {
+                stand();
+            }
+        }
+
+        function hit() {
+            if (gameOver) return;
+            
+            playerCards.push(dealCard());
+            updateDisplay();
+            
+            const playerScore = calculateScore(playerCards);
+            
+            if (playerScore > 21) {
+                endGame('przegrana');
+            }
+        }
+
+        function stand() {
+            if (gameOver) return;
+            
+            gameOver = true;
+            
+            // Krupier dobiera do 17
+            while (calculateScore(dealerCards) < 17) {
+                dealerCards.push(dealCard());
+            }
+            
+            updateDisplay();
+            
+            const playerScore = calculateScore(playerCards);
+            const dealerScore = calculateScore(dealerCards);
+            
+            if (playerScore > 21) {
+                endGame('przegrana');
+            } else if (dealerScore > 21) {
+                endGame('wygrana');
+            } else if (playerScore > dealerScore) {
+                endGame('wygrana');
+            } else if (playerScore < dealerScore) {
+                endGame('przegrana');
+            } else {
+                endGame('remis');
+            }
+        }
+
+        function endGame(result) {
+            gameOver = true;
+            document.getElementById('hitBtn').disabled = true;
+            document.getElementById('standBtn').disabled = true;
+            
+            let message = '';
+            let className = '';
+            
+            if (result === 'wygrana') {
+                message = '🎉 WYGRANA!';
+                className = 'win';
+            } else if (result === 'przegrana') {
+                message = '😢 PRZEGRANA';
+                className = 'lose';
+            } else {
+                message = '🤝 REMIS';
+                className = 'special';
+            }
+            
+            document.getElementById('bjMessage').textContent = message;
+            document.getElementById('bjMessage').className = `message ${className}`;
+            
+            // Historia
+            bjHistory.unshift(result);
+            if (bjHistory.length > 5) bjHistory.pop();
+            document.getElementById('bjHistory').innerHTML = bjHistory.map(r => {
+                const emoji = r === 'wygrana' ? '🎉' : r === 'przegrana' ? '😢' : '🤝';
+                return `<span class="history-item">${emoji} ${r}</span>`;
+            }).join('');
+            
+            updateDisplay();
+        }
+
+        // ==================== GENERATOR LOSOWYCH SŁÓW ====================
+        const consonants = 'BCDFGHJKLMNPQRSTVWXYZ';
+        const vowels = 'AEIOUY';
+        let wordHistory = [];
+
+        document.getElementById('wordLengthRange').addEventListener('input', function() {
+            document.getElementById('wordLength').textContent = this.value;
         });
+
+        function generateWord() {
+            const length = parseInt(document.getElementById('wordLengthRange').value);
+            let word = '';
+            let lastWasVowel = false;
+            
+            // Generuj słowo (naprzemiennie spółgłoski/samogłoski dla lepszego wyglądu)
+            for (let i = 0; i < length; i++) {
+                if (i === 0) {
+                    // Pierwsza litera - może być wielka
+                    word += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                } else {
+                    // Kolejne litery - na zmianę dla lepszego wyglądu
+                    if (lastWasVowel) {
+                        word += consonants[Math.floor(Math.random() * consonants.length)];
+                        lastWasVowel = false;
+                    } else {
+                        word += vowels[Math.floor(Math.random() * vowels.length)];
+                        lastWasVowel = true;
+                    }
+                }
+            }
+            
+            // Wyświetl słowo
+            document.getElementById('generatedWord').textContent = word;
+            
+            // Policz samogłoski i spółgłoski
+            const vowelCount = (word.match(/[AEIOUYaeiouy]/g) || []).length;
+            const consonantCount = length - vowelCount;
+            
+            document.getElementById('vowelCount').textContent = vowelCount;
+            document.getElementById('consonantCount').textContent = consonantCount;
+            document.getElementById('wordInfo').textContent = `${length} liter • ${vowelCount} samogłosek, ${consonantCount} spółgłosek`;
+            
+            // Dodaj do historii
+            wordHistory.unshift(word);
+            if (wordHistory.length > 5) wordHistory.pop();
+            document.getElementById('wordHistory').innerHTML = wordHistory.map(w => 
+                `<span class="history-item">${w}</span>`
+            ).join('');
+            
+            // Wiadomość
+            document.getElementById('wordMessage').textContent = `✅ Wygenerowano: ${word}`;
+            document.getElementById('wordMessage').className = 'message win';
+        }
+
+        function copyWord() {
+            const word = document.getElementById('generatedWord').textContent;
+            navigator.clipboard.writeText(word).then(() => {
+                document.getElementById('wordMessage').textContent = '📋 Skopiowano do schowka!';
+                document.getElementById('wordMessage').className = 'message special';
+                setTimeout(() => {
+                    document.getElementById('wordMessage').textContent = '';
+                }, 2000);
+            });
+        }
+
+        // ==================== START ====================
+        window.onload = function() {
+            initRoulette();
+            initRouletteTable();
+            updateDiceDisplay(1);
+            newGame(); // Rozpocznij blackjack
+            generateWord(); // Wygeneruj pierwsze słowo
+            
+            // Przykładowe historie
+            numberHistory = [42, 17, 33, 8, 91];
+            document.getElementById('numberHistory').innerHTML = numberHistory.map(n => 
+                `<span class="history-item">${n}</span>`
+            ).join('');
+        };
     </script>
 </body>
 </html>
